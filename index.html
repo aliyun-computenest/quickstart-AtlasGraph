@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>AtlasGraph 服务实例部署文档 - Aliyun 计算巢 x AtlasGraph</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#atlasgraph">AtlasGraph 服务实例部署文档</a></li>
+              
+                  <li><a href="#_1">概述</a></li>
+                  
+              
+                  <li><a href="#_2">部署流程</a></li>
+                  
+                      <li class="li-h3"><a href="#1">1. 部署入口</a></li>
+                  
+                      <li class="li-h3"><a href="#2-atlasgraph">2. 创建AtlasGraph服务</a></li>
+                  
+                      <li class="li-h3"><a href="#3-atlasgraph">3. 启动 AtlasGraph 服务</a></li>
+                  
+              
+                  <li><a href="#faq">常见问题FAQ</a></li>
+                  
+                      <li class="li-h3"><a href="#_3">问题一：部署区域无可用资源</a></li>
+                  
+                      <li class="li-h3"><a href="#web">问题二: 启动后web访问不通</a></li>
+                  
+              
+                  <li><a href="#_4">联系我们</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="atlasgraph">AtlasGraph 服务实例部署文档</h1>
+<h2 id="_1">概述</h2>
+<p>AtlasGraph 是海致星图自研的高性能图数据库（Graph Database），可在计算巢上快速部署 AtlasGraph，从而搭建您自己的图应用。本文向您介绍如何开通计算巢上的 AtlasGraph 服务，以及部署流程和使用说明。</p>
+<p>欢迎大家申请使用，如果在使用过程中发现任何问题，请随时向我们提供反馈。</p>
+<h2 id="_2">部署流程</h2>
+<p>在正式开始使用前，您需要一个阿里云账号，对ECS、VPC等资源进行访问和创建操作。</p>
+<ul>
+<li>若您使用个人账号，可以直接创建服务实例</li>
+<li>若您使用RAM用户创建服务实例，且是第一次使用阿里云计算巢<ul>
+<li>需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见<a href="https://help.aliyun.com/document_detail/121945.html">为RAM用户授权</a>。所需权限如下表所示。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>权限策略名称</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AliyunECSFullAccess</td>
+<td>管理云服务器服务（ECS）的权限</td>
+</tr>
+<tr>
+<td>AliyunVPCFullAccess</td>
+<td>管理专有网络（VPC）的权限</td>
+</tr>
+<tr>
+<td>AliyunROSFullAccess</td>
+<td>管理资源编排服务（ROS）的权限</td>
+</tr>
+<tr>
+<td>AliyunComputeNestUserFullAccess</td>
+<td>管理计算巢服务（ComputeNest）的用户侧权限</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1">1. 部署入口</h3>
+<p>您可以在阿里云计算巢自行搜索，也可以通过下述部署链接快速到达。</p>
+<p><a href="https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&amp;ServiceId=service-0aabc7f118d148c1bbfc">部署链接</a></p>
+<h3 id="2-atlasgraph">2. 创建AtlasGraph服务</h3>
+<h4 id="21">2.1 参数列表</h4>
+<p>您在创建服务实例的过程中，需要配置服务实例信息的参数列表，具体如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数组</th>
+<th>参数项</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务实例名称</td>
+<td>N/A</td>
+<td>atlas_graph-2v30</td>
+<td>实例的名称。</td>
+</tr>
+<tr>
+<td>地域</td>
+<td>N/A</td>
+<td>华北2（北京）</td>
+<td>选中服务实例的地域，建议就近选中，以获取更好的网络延时。</td>
+</tr>
+<tr>
+<td>选择已有基础资源配置</td>
+<td>VPC ID</td>
+<td>vpc-xxx</td>
+<td>按实际情况，选择专有网络的ID。</td>
+</tr>
+<tr>
+<td>可用区配置</td>
+<td>部署区域</td>
+<td>可用区I</td>
+<td>地域下的不同可用区域，确保实例非空。</td>
+</tr>
+<tr>
+<td>选择已有基础资源配置</td>
+<td>交换机ID</td>
+<td>vsw-xxx</td>
+<td>按实际情况，选择交换机ID。若找不到交换机, 可尝试切换地域和可用区。</td>
+</tr>
+<tr>
+<td>选择已有基础资源配置</td>
+<td>K8s集群ID</td>
+<td>xxx/xxx</td>
+<td>按实际情况，选择容器服务 ACK 集群 ID。</td>
+</tr>
+<tr>
+<td>部署应用程序的K8s命名空间</td>
+<td>N/A</td>
+<td>atlasgraph</td>
+<td>选择集群中不存在的 namespace。</td>
+</tr>
+<tr>
+<td>付费类型配置</td>
+<td>付费类型</td>
+<td>按量付费</td>
+<td>请按需求选择按量付费或者包年包月。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="22">2.2 具体步骤</h4>
+<p>创建服务按如下步骤进行，参考下图：</p>
+<ul>
+<li>创建实例名称，如下图中“atlas_graph-2v30”</li>
+<li>选择地域，如下图中“华北2（北京）”</li>
+</ul>
+<p><img alt="2-1.png" src="2-1.png" /></p>
+<ul>
+<li>选择 VPC ID</li>
+<li>选择可用区</li>
+<li>选择交换机 ID</li>
+</ul>
+<p><img alt="2-2.png" src="2-2.png" /></p>
+<ul>
+<li>选择 K8s 集群 ID</li>
+<li>设置部署应用程序的 K8s 命名空间</li>
+</ul>
+<p><img alt="2-3.png" src="2-3.png" /></p>
+<ul>
+<li>选择付费类型</li>
+</ul>
+<p><img alt="2-4.png" src="2-4.png" /></p>
+<ul>
+<li>点击下一步，进入订单确认页面</li>
+<li>勾选“权限确认”和“服务条款”中的复选框</li>
+<li>点击“立即创建”即可等待服务自动部署</li>
+</ul>
+<p><img alt="2-5.png" src="2-5.png" /></p>
+<h3 id="3-atlasgraph">3. 启动 AtlasGraph 服务</h3>
+<ul>
+<li>查看服务实例：服务实例创建成功后，部署时间大约需要3分钟。部署完成后，页面上可以看到对应的服务实例，如下图：</li>
+</ul>
+<p><img alt="3-1.png" src="3-1.png" /></p>
+<ul>
+<li>点击该服务实例访问 AtlasGraph。进入到对应的服务实例后，可以在页面上获取到 Web IP。</li>
+</ul>
+<p><img alt="3-2.png" src="3-2.png" /></p>
+<ul>
+<li>使用该 web 地址，即可访问已经部署好的 AtlasGraph Web。</li>
+</ul>
+<p><img alt="3-3.png" src="3-3.png" /></p>
+<ul>
+<li>使用默认的账号密码（root/root）登录，即可进入到 AtlasGraph Web 的首页。</li>
+</ul>
+<p><img alt="3-4.png" src="3-4.png" /></p>
+<h2 id="faq">常见问题FAQ</h2>
+<h3 id="_3">问题一：部署区域无可用资源</h3>
+<p>有时，所选部署区域（如可用区G）没有所选套餐的可用资源，会报错如下图所示：</p>
+<p><img alt="trouble-1.jpg" src="trouble1.jpeg" /></p>
+<p><strong>解决办法</strong>：尝试选择其他区域，如可用区I等。</p>
+<h3 id="web">问题二: 启动后web访问不通</h3>
+<p>web的启动需要一点点时间，请稍后刷新页面即可。</p>
+<h2 id="_4">联系我们</h2>
+<p>欢迎访问 AtlasGraph 官网（<a href="https://www.stargraph.cn">https://www.stargraph.cn</a>）了解更多信息。</p>
+<p>扫码关注微信公众号，技术博客、活动通知不容错过：</p>
+<p><img alt="alert" src="wechat.jpeg" /></p>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.5.3
+  Docs Build Date UTC : 2023-11-16 01:25:42.612249+00:00
+  -->
+</body>
+</html>
